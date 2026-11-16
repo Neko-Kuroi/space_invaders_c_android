@@ -69,9 +69,13 @@ static void build_input(Input *in, SDL_Renderer *renderer, int smoke_frame)
             in->quit = true;
         if (e.type == SDL_KEYUP) {
             in->any_keyup = true;
-            if (e.key.keysym.sym == SDLK_ESCAPE ||
-                e.key.keysym.sym == SDLK_AC_BACK)
+            if (e.key.keysym.sym == SDLK_ESCAPE)
                 in->quit = true;
+#ifdef __ANDROID__
+            /* 戻るボタン＝終了は Android 用（デスクトップの挙動は変えない） */
+            if (e.key.keysym.sym == SDLK_AC_BACK)
+                in->quit = true;
+#endif
             if (e.key.keysym.sym == SDLK_a || e.key.keysym.sym == SDLK_d)
                 in->keyup_move = true;
         }
