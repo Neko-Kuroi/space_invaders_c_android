@@ -1,0 +1,31 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        // この VM では Java のネットワークが制限されているため、curl で
+        // 先に落とした部品を置くローカルリポジトリを先頭に置く。
+        // 通常の環境では --offline を付けなければ google()/mavenCentral()
+        // から取得するので、この行があっても問題ない。
+        maven { url = uri("${rootDir}/../m2repo") }
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.1'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url = uri("${rootDir}/../m2repo") }
+        mavenCentral()
+        google()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
